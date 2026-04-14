@@ -88,15 +88,13 @@ void FortPlayerPawn::NetMulticast_Athena_BatchedDamageCues(AFortPlayerPawn* Cont
 
 void FortPlayerPawn::OnCapsuleBeginOverlap(AFortPlayerPawn* Context, UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	oOnCapsuleBeginOverlap(Context, OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-
 	if (Context == nullptr || OtherActor == nullptr)
-		return;
+		return oOnCapsuleBeginOverlap(Context, OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
 	if (Context->IsDBNO() == true)
-		return;
+		return oOnCapsuleBeginOverlap(Context, OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
-	if (OtherActor->IsA(AFortPickupAthena::StaticClass()))
+	if (OtherActor->IsA(AFortPickupAthena::StaticClass()) == true)
 	{
 		AFortPickup* Pickup = Cast<AFortPickup>(OtherActor);
 		if (Pickup->PawnWhoDroppedPickup != Context)
@@ -110,6 +108,8 @@ void FortPlayerPawn::OnCapsuleBeginOverlap(AFortPlayerPawn* Context, UPrimitiveC
 				Context->ServerHandlePickup(Pickup, 0.4f, FVector(), true);
 		}
 	}
+
+	return oOnCapsuleBeginOverlap(Context, OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 }
 
 void FortPlayerPawn::ServerSendZiplineState(AFortPlayerPawn* Context, const FZiplinePawnState& InZiplineState)
