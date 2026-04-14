@@ -25,8 +25,6 @@ void FortKismetLibrary::PickLootDrops(UObject* Context, FFrame& Stack, bool* Ret
 	Stack.StepCompiledIn(&ForcedLootTier);
     Stack.IncrementCode();
 
-	cout << "Sigma\n";
-
 	vector<LootDrop> LootDrops = UKismetLootLibrary::PickLootDrops(TierGroupName, GetGameState()->WorldLevel, ForcedLootTier);
 	TArray<FFortItemEntry> ok;
 
@@ -36,17 +34,13 @@ void FortKismetLibrary::PickLootDrops(UObject* Context, FFrame& Stack, bool* Ret
 		if (LootDrop.ItemEntry == nullptr)
 			continue;
 
-		ok.Add(*LootDrop.ItemEntry);
+		OutLootToDrop->Add(*LootDrop.ItemEntry);
 	}
-
-	OutLootToDrop = &ok;
-
-	ok.Free();
 
 	*Ret = true;
 }
 
 void FortKismetLibrary::Patch()
 {
-	ExecHook(UFortKismetLibrary::StaticClass()->GetFunction("FortKismetLibrary", "PickLootDrops"), PickLootDrops);
+	// ExecHook(UFortKismetLibrary::StaticClass()->GetFunction("FortKismetLibrary", "PickLootDrops"), PickLootDrops); // crashes for some reason
 }
