@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="IceGS.vcxproj" Id="dd7f0730-fa7a-45bf-a850-24259980968b" />
+</Solution>
